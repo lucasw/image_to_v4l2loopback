@@ -19,29 +19,34 @@ $ cmake -G"Eclipse CDT4 - Unix Makefiles" -D CMAKE_BUILD_TYPE=Debug ../ros-virtu
 video devices
 =============
 
-Stream sink needs to a video capture device. These will be different depending
-on you system.
+Stream sink needs to write to a video capture device, which varies depending
+on your system.
 
-Linx
----
+linux
+-----
 
-Uses [v4l2-loopback](https://github.com/umlaeute/v4l2loopback).
+Uses [v4l2-loopback](https://github.com/umlaeute/v4l2loopback):
 
 ```bash
 $ sudo apt-get install v4l2loopback-*
 $ sudo modprobe v4l2loopback video_nr=1 card_label="Loopback video device 0"
 ```
 
-Mac
+mac
 ---
-sol
 
-Windows
----
-sol
+**sol**
+
+windows
+-------
+
+**sol**
 
 usage
 =====
+
+stream
+------
 
 Typically just:
 
@@ -51,4 +56,20 @@ $ rosrun virtual_camera stream  /dev/video1  -s 640x480 -f YV12 image:=/my_camer
 ```
 
 where `image:=/downward_looking_camera/image_raw` is the image topic to stream
-to `/dev/video1`.
+to `/dev/video1`, for more:
+
+
+```bash
+$ rosrun virtual_camera stream --help
+...
+```
+
+up
+--
+
+**TODO**
+
+down
+---
+
+**TODO**
