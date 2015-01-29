@@ -55,8 +55,7 @@ $ rosrun virtual_camera stream  /dev/video1  -s 640x480 -f YV12 image:=/my_camer
 ...
 ```
 
-where `image:=/downward_looking_camera/image_raw` is the image topic to stream
-to `/dev/video1`, for more:
+where `/my_camera/image` is the image topic to stream to `/dev/video1`. For more:
 
 
 ```bash
