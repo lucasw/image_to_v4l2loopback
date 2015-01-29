@@ -1,0 +1,3 @@
+#!/bin/bash 
+# TODO
+sudo modprobe v4l2loopback video_nr=1,2,3 card_label="Loopback video device 0","Loopback video device 1","Loopback video device 2"
