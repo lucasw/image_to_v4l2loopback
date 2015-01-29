@@ -51,7 +51,7 @@ stream
 Typically just:
 
 ```bash
-$ rosrun virtual_camera stream  /dev/video1  -s 640x480 -f YV12 image:=/my_camera/image
+$ rosrun virtual_camera stream /dev/video1 -s 640x480 -f YV12 image:=/my_camera/image
 ...
 ```
 
