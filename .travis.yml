@@ -7,6 +7,7 @@ compiler:
   - gcc
 
 install:
+  # ros
   - sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu precise main" > /etc/apt/sources.list.d/ros-latest.list'
   - wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
   - sudo apt-get update -qq
@@ -18,6 +19,7 @@ install:
   - cd /tmp/ws
   - rosdep install --from-paths src --ignore-src --rosdistro groovy -y
   - rosdep install --from-paths src --ignore-src --rosdistro hydro -y
+
   # TODO: rosdep install-able
   - pip install v4l2capture
   - sudo apt-get install v4l2loopback-dkms v4l2loopback-source v4l2loopback-utils -qq
