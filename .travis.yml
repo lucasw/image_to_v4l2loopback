@@ -18,6 +18,7 @@ install:
   - cd /tmp/ws
   - rosdep install --from-paths src --ignore-src --rosdistro groovy -y
   - rosdep install --from-paths src --ignore-src --rosdistro hydro -y
+  - gem install coveralls-lcov
 
 script:
   - source /opt/ros/hydro/setup.bash
@@ -30,3 +31,4 @@ after_success:
   - lcov --directory . --capture --output-file coverage.info
   - lcov --remove coverage.info 'tests/*' '/usr/*' '/opt/*' --output-file coverage.info 
   - lcov --list coverage.info
+  - coveralls-lcov --repo-token mMkyooh3XvSim8TdmzsDJCpso2FAQ8fE7 coverage.info
