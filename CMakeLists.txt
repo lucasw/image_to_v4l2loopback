@@ -6,15 +6,13 @@ project(virtual_camera)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS roscpp std_msgs genmsg cv_bridge image_transport)
 
+## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 find_package(PkgConfig REQUIRED COMPONENTS system)
-
-find_package(tclap)
-include_directories(${tclap_INCLUDE_DIRS})
-
 find_package(OpenCV)
-include_directories(${OpenCV_INCLUDE_DIRS})
-link_libraries(${OpenCV_LIBRARIES})
+
+## System dependencies also found via PkgConfig's conventions
+pkg_check_modules(tclap REQUIRED tclap)
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -91,6 +89,8 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 # include_directories(include)
+include_directories(${tclap_INCLUDE_DIRS})
+include_directories(${OpenCV_INCLUDE_DIRS})
 
 ## Declare a cpp library
 # add_library(virtual_camera
@@ -114,6 +114,8 @@ target_link_libraries(stream
   ${catkin_LIBRARIES}
   ${OpenCV_LIBRARIES}
 )
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 -fprofile-arcs -ftest-coverage")
 
 #############
 ## Install ##
