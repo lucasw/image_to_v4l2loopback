@@ -7,11 +7,10 @@ compiler:
   - gcc
 
 install:
-  # ros
   - sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu precise main" > /etc/apt/sources.list.d/ros-latest.list'
   - wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
   - sudo apt-get update -qq
-  - sudo apt-get install python-catkin-pkg python-rosdep ros-groovy-catkin ros-hydro-catkin -qq
+  - sudo apt-get install python-catkin-pkg python-rosdep ros-groovy-catkin ros-hydro-catkin libtclap-dev -qq
   - sudo rosdep init
   - rosdep update
   - mkdir -p /tmp/ws/src
@@ -20,20 +19,7 @@ install:
   - rosdep install --from-paths src --ignore-src --rosdistro groovy -y
   - rosdep install --from-paths src --ignore-src --rosdistro hydro -y
 
-  # TODO: rosdep install-able
-  - sudo pip install v4l2capture
-  - sudo apt-get install libtclap-dev -qq
-  
-  # v4l2loopback
-  - sudo apt-get install user-mode-linux linux-headers-$(uname -r) build-essential
-  - git clone https://github.com/umlaeute/v4l2loopback.git
-  - cd v4l2loopback
-  - make && sudo make install
-  - sudo modprobe v4l2loopback video_nr=1
-  - ls -ld /dev/video*
-
 script:
   - source /opt/ros/hydro/setup.bash
   - catkin_make
   - catkin_make install
-  - ROS_VIRTUAL_CAMERA_STREAM_TEST_DEVICE=/dev/video1 catkin_make run_tests
