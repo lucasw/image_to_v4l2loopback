@@ -32,12 +32,12 @@
   <!-- Examples: -->
   
   <!-- Use build_depend for packages you need at compile time: -->
-  <!--   <build_depend>message_generation</build_depend> -->
+  <!-- <build_depend>message_generation</build_depend> -->
   <build_depend>cv_bridge</build_depend>
   <build_depend>image_transport</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>std_msgs</build_depend>
-  <build_depend>tclap</build_depend>
+  <!-- <build_depend>tclap</build_depend> -->
   
   <!-- Use buildtool_depend for build tool packages: -->
   <!--   <buildtool_depend>catkin</buildtool_depend> -->

@@ -22,7 +22,7 @@ install:
 
   # TODO: rosdep install-able
   - pip install v4l2capture
-  - sudo apt-get install v4l2loopback-dkms v4l2loopback-source v4l2loopback-utils -qq
+  - sudo apt-get install v4l2loopback-dkms v4l2loopback-source v4l2loopback-utils libtclap-dev -qq
   - sudo modprobe v4l2loopback video_nr=1
 
 script:
