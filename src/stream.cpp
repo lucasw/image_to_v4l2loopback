@@ -2,14 +2,14 @@
  * Based on https://github.com/czw90130/virtual_camera/ by:
  *
  * @copyright Copyright (c) 2013, Zhiwei Chu
- * @copyright Copyright (c) 2015, ixi.
+ * @copyright Copyright (c) 2015, mayfieldrobotics.
  * @license This project is released under the BSD License.
  *
  */
 
 #include "command_line.h"
-#include "video_device.h"
 #include "image_converter.h"
+#include "video_device.h"
 
 #include <image_transport/image_transport.h>
 #include <image_transport/publisher.h>
@@ -57,6 +57,11 @@ private:
 
 };
 
+const int EXIT_OK = 0;
+const int EXIT_FAILED_DEVICE_FORMAT = 1;
+const int EXIT_FAILED_DEVICE_STREAM = 2;
+const int EXIT_FAILED_DEVICE_CAPS = 3;
+
 
 int main(int argc, char**argv) {
     ros::V_string args;
@@ -78,11 +83,26 @@ int main(int argc, char**argv) {
 
     ROS_INFO("opening '%s'", cl.video_device().c_str());
     VideoDevice dev(cl.video_device());
+
     ROS_INFO("setting '%s' format", cl.video_device().c_str());
-    int rc = dev.set_format(cvt.format());
+    v4l2_format format = cvt.format();
+    int rc = dev.set_format(format);
     if (rc == -1) {
-        return 1;
+        return EXIT_FAILED_DEVICE_FORMAT;
     }
+
+    ROS_INFO("turn on '%s' streaming", cl.video_device().c_str());
+    rc = dev.stream_on();
+    if (rc == -1) {
+        return EXIT_FAILED_DEVICE_STREAM;
+    }
+
+    v4l2_capability capability;
+    rc = dev.capabilities(capability);
+    if (rc == -1) {
+        return EXIT_FAILED_DEVICE_CAPS;
+    }
+    ROS_INFO("'%s' caps %#08x", cl.video_device().c_str(), capability.capabilities);
 
     ROS_INFO(
         "streaming images from '%s' to '%s' w/ queue-size=%zu",
@@ -94,5 +114,5 @@ int main(int argc, char**argv) {
 
     ros::spin();
 
-    return 0;
+    return EXIT_OK;
 }

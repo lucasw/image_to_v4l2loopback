@@ -34,7 +34,25 @@ VideoDevice::~VideoDevice() {
     _fd = -1;
 }
 
-int VideoDevice::capabilities(const v4l2_capability& capability) {
+int VideoDevice::stream_on() {
+    int type = V4L2_BUF_TYPE_VIDEO_OUTPUT;
+    int rc = ioctl(_fd, VIDIOC_STREAMON, &type);
+    if (rc == -1) {
+        ROS_ERROR("ioctl(%d, VIDIOC_STREAMON) failed - errno=%d, %s", _fd, errno, strerror(errno));
+    }
+    return rc;
+}
+
+int VideoDevice::stream_off() {
+    int type = V4L2_BUF_TYPE_VIDEO_OUTPUT;
+    int rc = ioctl(_fd, VIDIOC_STREAMOFF, &type);
+    if (rc == -1) {
+        ROS_ERROR("ioctl(%d, VIDIOC_STREAMOFF) failed - errno=%d, %s", _fd, errno, strerror(errno));
+    }
+    return rc;
+}
+
+int VideoDevice::capabilities(v4l2_capability& capability) {
     int rc = ioctl(_fd, VIDIOC_QUERYCAP, &capability);
     if (rc == -1) {
         ROS_ERROR("ioctl(%d, VIDIOC_QUERYCAP) failed - errno=%d, %s", _fd, errno, strerror(errno));

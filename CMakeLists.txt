@@ -6,7 +6,6 @@ project(virtual_camera)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS roscpp std_msgs genmsg cv_bridge image_transport)
 
-## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 find_package(PkgConfig REQUIRED COMPONENTS system)
 
@@ -100,10 +99,10 @@ catkin_package(
 
 ## Declare a cpp executable
 add_executable(stream
-  src/video_device.cpp
-  src/image_converter.cpp
   src/command_line.cpp
+  src/image_converter.cpp
   src/stream.cpp
+  src/video_device.cpp
 )
 
 ## Add cmake target dependencies of the executable/library
@@ -126,8 +125,6 @@ target_link_libraries(stream
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 install(PROGRAMS
-  scripts/up
-  scripts/down
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
@@ -151,3 +148,33 @@ install(PROGRAMS
 #   # myfile2
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
+
+##########
+## Test ##
+##########
+
+if(CATKIN_ENABLE_TESTING)
+  catkin_download_test_data(
+    ${PROJECT_NAME}_sim-cam_2015-02-19-11-42-28.bag
+    https://s3-us-west-1.amazonaws.com/ai-mf-data/sim-cam_2015-02-19-11-42-28.bag
+    DESTINATION /tmp/${PROJECT_NAME}
+    FILENAME sim-cam_2015-02-19-11-42-28.bag
+    MD5 6927504331cd17d2ff8e9c498d0bf0ff
+  )
+    
+  find_package(rostest REQUIRED)
+  foreach(T
+    tests/stream-test.launch
+    )
+    add_rostest(${T})
+  endforeach()
+  
+  include_directories(src)
+  catkin_add_gtest(unit_test
+      tests/unit_test.cpp
+      src/command_line.cpp
+      src/image_converter.cpp
+      src/video_device.cpp
+  )
+  target_link_libraries(unit_test ${catkin_LIBRARIES})
+endif()

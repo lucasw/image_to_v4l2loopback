@@ -49,7 +49,7 @@ ImageConverter::ImageConverter(
         default:
             std::stringstream ss;
             ss << "Unsupported fourcc=" << _fourcc << ".";
-            throw std::runtime_error(ss.str());
+            throw std::invalid_argument(ss.str());
     };
 }
 

@@ -16,7 +16,11 @@ public:
 
     ~VideoDevice();
 
-    int capabilities(const v4l2_capability& capability);
+    int stream_on();
+
+    int stream_off();
+
+    int capabilities(v4l2_capability& capability);
 
     int get_format(v4l2_format& format);
 

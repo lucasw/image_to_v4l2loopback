@@ -1,14 +1,13 @@
 <?xml version="1.0"?>
 <package>
   <name>virtual_camera</name>
-  <version>0.0.0</version>
+  <version>0.1.0</version>
   <description>virtual camera</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
-  <maintainer email="todo@todo.todo">WalterCHU</maintainer>
-
+  <maintainer email="todo@todo.todo">dev+ros-virtual-camera@mayfieldrobotics.com</maintainer>
 
   <!-- One license tag required, multiple allowed, one license per tag -->
   <!-- Commonly used license strings: -->
@@ -19,7 +18,7 @@
   <!-- Url tags are optional, but mutiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/ixi</url> -->
+  <url type="website">https://github.com/mayfieldrobotics/ros-virtual-camera</url>
 
 
   <!-- Author tags are optional, mutiple are allowed, one per tag -->
@@ -34,10 +33,10 @@
   
   <!-- Use build_depend for packages you need at compile time: -->
   <!--   <build_depend>message_generation</build_depend> -->
+  <build_depend>cv_bridge</build_depend>
+  <build_depend>image_transport</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>std_msgs</build_depend>
-  <build_depend>image_transport</build_depend>
-  <build_depend>cv_bridge</build_depend>
   <build_depend>tclap</build_depend>
   
   <!-- Use buildtool_depend for build tool packages: -->
@@ -52,6 +51,7 @@
   
   <!-- Use test_depend for packages you need only for testing: -->
   <!--   <test_depend>gtest</test_depend> -->
+  <test_depend>rostest</test_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

@@ -1,74 +1,90 @@
-ros-virtual-camera
-==================
+# ros-virtual-camera
 
 ROS node for streaming an image topic to  a video capture device. Mostly
 based on this:
 
 * [virtual_camera](https://github.com/czw90130/virtual_camera)
 
-dev
-===
+## dev
+
+Setup a workspace:
 
 ```bash
-$ git clone git@github.com:ixirobot/ros-virtual-camera.git
-$ mkdir ros-virtual-camera-build
-$ cd ros-virtual-camera-build
-$ cmake -G"Eclipse CDT4 - Unix Makefiles" -D CMAKE_BUILD_TYPE=Debug ../ros-virtual-camera/
+$ mkdir ~/ros/virtual-camera-ws/src -p
+$ cd ~/ros/virtual-camera-ws/src
+$ git clone git@github.com:ixirobot/ros-virtual-camera.git virtual_camera
+$ catkin_init_workspace
+$ cd ..
+$ catkin_make
 ```
 
-video devices
-=============
+and a project if you want:
+
+```bash
+$ mkdir ~/ros/virtual-camera-prj -p
+$ cd ros-virtual-camera-build
+$ cmake -G"Eclipse CDT4 - Unix Makefiles" -D CMAKE_BUILD_TYPE=Debug ~/ros/virtual-camera-ws/src/virtual_camera
+```
+
+## video devices
 
 Stream sink needs to write to a video capture device, which varies depending
 on your system.
 
-linux
------
+### linux
 
 Uses [v4l2-loopback](https://github.com/umlaeute/v4l2loopback):
 
 ```bash
 $ sudo apt-get install v4l2loopback-*
-$ sudo modprobe v4l2loopback video_nr=1 card_label="Loopback video device 0"
+$ sudo modprobe v4l2loopback video_nr=1
+$ v4l2-ctl -D -d /dev/video1
 ```
 
-mac
----
+### mac
 
 **sol**
 
-windows
--------
+### windows
 
 **sol**
 
-usage
-=====
+## usage
 
-stream
-------
+### stream
 
 Typically just:
 
 ```bash
 $ rosrun virtual_camera stream /dev/video1 -s 640x480 -f YV12 image:=/my_camera/image
-...
 ```
 
-where `/my_camera/image` is the image topic to stream to `/dev/video1`. For more:
+where:
 
+* `/my_camera/image` source image topic
+* `/dev/video1` target device
+* `640x480` target size
+* `YV12` target [pixel format](http://en.wikipedia.org/wiki/FourCC)
+
+For more:
 
 ```bash
 $ rosrun virtual_camera stream --help
-...
 ```
 
-up
---
+## tests
 
-**TODO**
-
-down
----
-
-**TODO**
+```bash
+$ v4l2-ctl -D -d /dev/video1
+Driver Info (not using libv4l2):
+    Driver name   : v4l2 loopback
+    Card type     : Dummy video device (0x0000)
+    Bus info      : v4l2loopback:0
+    Driver version: 0.8.0
+    Capabilities  : 0x05000003
+        Video Capture
+        Video Output
+        Read/Write
+        Streaming
+$ ROS_VIRTUAL_CAMERA_STREAM_TEST_DEVICE=/dev/video1 catkin_make run_tests
+```
