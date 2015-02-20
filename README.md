@@ -22,14 +22,14 @@ and a project if you want:
 
 ```bash
 $ mkdir ~/ros/virtual-camera-prj -p
-$ cd ros-virtual-camera-build
+$ cd ~/ros/virtual-camera-prj
 $ cmake -G"Eclipse CDT4 - Unix Makefiles" -D CMAKE_BUILD_TYPE=Debug ~/ros/virtual-camera-ws/src/virtual_camera
 ```
 
 ## video devices
 
-Stream sink needs to write to a video capture device, which varies depending
-on your system.
+Stream node needs to write to a video capture device, which varies depending on
+your system.
 
 ### linux
 
@@ -39,6 +39,16 @@ Uses [v4l2-loopback](https://github.com/umlaeute/v4l2loopback):
 $ sudo apt-get install v4l2loopback-*
 $ sudo modprobe v4l2loopback video_nr=1
 $ v4l2-ctl -D -d /dev/video1
+Driver Info (not using libv4l2):
+    Driver name   : v4l2 loopback
+    Card type     : Dummy video device (0x0000)
+    Bus info      : v4l2loopback:0
+    Driver version: 0.8.0
+    Capabilities  : 0x05000003
+        Video Capture
+        Video Output
+        Read/Write
+        Streaming
 ```
 
 ### mac
@@ -61,10 +71,10 @@ $ rosrun virtual_camera stream /dev/video1 -s 640x480 -f YV12 image:=/my_camera/
 
 where:
 
-* `/my_camera/image` source image topic
 * `/dev/video1` target device
 * `640x480` target size
 * `YV12` target [pixel format](http://en.wikipedia.org/wiki/FourCC)
+* `/my_camera/image` the source `sensor_msgs/Image` topic re-mapped to `image`
 
 For more:
 
