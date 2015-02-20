@@ -32,3 +32,4 @@ after_success:
   - lcov --remove coverage.info 'tests/*' '/usr/*' '/opt/*' --output-file coverage.info 
   - lcov --list coverage.info
   - coveralls-lcov --repo-token mMkyooh3XvSim8TdmzsDJCpso2FAQ8fE7 coverage.info
+
