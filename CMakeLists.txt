@@ -19,6 +19,17 @@ pkg_check_modules(tclap REQUIRED tclap)
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
 # catkin_python_setup()
 
+##############
+## Coverage ##
+##############
+
+set(COVERAGE "OFF" CACHE STRING "Enable coverage generation.")
+
+message(STATUS "Using COVERAGE: ${COVERAGE}")
+if("${COVERAGE}" STREQUAL "ON")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage -fprofile-arcs -ftest-coverage")
+endif()
+
 ################################################
 ## Declare ROS messages, services and actions ##
 ################################################
@@ -114,8 +125,6 @@ target_link_libraries(stream
   ${catkin_LIBRARIES}
   ${OpenCV_LIBRARIES}
 )
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 -fprofile-arcs -ftest-coverage")
 
 #############
 ## Install ##

@@ -10,7 +10,7 @@ install:
   - sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu precise main" > /etc/apt/sources.list.d/ros-latest.list'
   - wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
   - sudo apt-get update -qq
-  - sudo apt-get install python-catkin-pkg python-rosdep ros-groovy-catkin ros-hydro-catkin libtclap-dev -qq
+  - sudo apt-get install python-catkin-pkg python-rosdep ros-groovy-catkin ros-hydro-catkin libtclap-dev lcov -qq
   - sudo rosdep init
   - rosdep update
   - mkdir -p /tmp/ws/src
@@ -21,6 +21,12 @@ install:
 
 script:
   - source /opt/ros/hydro/setup.bash
-  - catkin_make
+  - rm -rf build/ devel/
+  - catkin_make -DCMAKE_BUILD_TYPE=Debug -DCOVERAGE=ON
   - catkin_make install
   - catkin_make run_tests_virtual_camera_gtest_unit_test
+
+after_success:
+  - lcov --directory . --capture --output-file coverage.info
+  - lcov --remove coverage.info 'tests/*' '/usr/*' '/opt/*' --output-file coverage.info 
+  - lcov --list coverage.info
