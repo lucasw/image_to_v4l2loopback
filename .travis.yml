@@ -22,10 +22,18 @@ install:
 
   # TODO: rosdep install-able
   - sudo pip install v4l2capture
-  - sudo apt-get install v4l2loopback-dkms v4l2loopback-source libtclap-dev -qq
+  - sudo apt-get install libtclap-dev -qq
+  
+  # v4l2loopback
+  - sudo apt-get install user-mode-linux linux-headers-$(uname -r) build-essential
+  - git clone https://github.com/umlaeute/v4l2loopback.git
+  - cd v4l2loopback
+  - make && sudo make install
   - sudo modprobe v4l2loopback video_nr=1
+  - ls -ld /dev/video*
 
 script:
   - source /opt/ros/hydro/setup.bash
   - catkin_make
   - catkin_make install
+  - ROS_VIRTUAL_CAMERA_STREAM_TEST_DEVICE=/dev/video1 catkin_make run_tests
