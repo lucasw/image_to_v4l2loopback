@@ -23,3 +23,4 @@ script:
   - source /opt/ros/hydro/setup.bash
   - catkin_make
   - catkin_make install
+  - catkin_make run_tests_virtual_camera_gtest_unit_test
