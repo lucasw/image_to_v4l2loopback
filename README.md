@@ -1,4 +1,4 @@
-# ros-virtual-camera [![Build Status](https://magnum.travis-ci.com/mayfieldrobotics/ros-virtual-camera.svg?token=qHBoPmgQbWPVxfoYZkz1)](https://magnum.travis-ci.com/mayfieldrobotics/ros-virtual-camera)
+# ros-virtual-camera [![Build Status](https://travis-ci.org/mayfieldrobotics/ros-virtual-camera.svg?branch=master)](https://travis-ci.org/mayfieldrobotics/ros-virtual-camera)
 
 ROS node for streaming an image topic to  a video capture device. Mostly
 based on this:
