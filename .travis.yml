@@ -10,13 +10,12 @@ install:
   - sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu precise main" > /etc/apt/sources.list.d/ros-latest.list'
   - wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
   - sudo apt-get update -qq
-  - sudo apt-get install python-catkin-pkg python-rosdep ros-groovy-catkin ros-hydro-catkin libtclap-dev lcov -qq
+  - sudo apt-get install python-catkin-pkg python-rosdep ros-hydro-catkin libtclap-dev lcov -qq
   - sudo rosdep init
   - rosdep update
   - mkdir -p /tmp/ws/src
   - ln -s `pwd` /tmp/ws/src/package
   - cd /tmp/ws
-  - rosdep install --from-paths src --ignore-src --rosdistro groovy -y
   - rosdep install --from-paths src --ignore-src --rosdistro hydro -y
   - gem install coveralls-lcov
 
