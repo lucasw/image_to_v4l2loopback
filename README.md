@@ -98,3 +98,13 @@ Driver Info (not using libv4l2):
         Streaming
 $ ROS_VIRTUAL_CAMERA_STREAM_TEST_DEVICE=/dev/video1 catkin_make run_tests
 ```
+
+If you want coverage:
+
+```bash
+$ catkin_make -DCMAKE_BUILD_TYPE=Debug -DCOVERAGE=ON
+$ ROS_VIRTUAL_CAMERA_STREAM_TEST_DEVICE=/dev/video1 catkin_make run_tests
+$ lcov --path . --directory . --capture --output-file coverage.info
+$ lcov --remove coverage.info 'tests/*' '/usr/*' '/opt/*' --output-file coverage.info
+$ lcov --list coverage.info
+```
