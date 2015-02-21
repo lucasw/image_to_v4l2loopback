@@ -1,4 +1,4 @@
-# ros-virtual-camera [![Build Status](https://travis-ci.org/mayfieldrobotics/ros-virtual-camera.svg?branch=master)](https://travis-ci.org/mayfieldrobotics/ros-virtual-camera)
+# ros-virtual-camera [![Build Status](https://travis-ci.org/mayfieldrobotics/ros-virtual-camera.svg?branch=master)](https://travis-ci.org/mayfieldrobotics/ros-virtual-camera) [![Coverage Status](https://coveralls.io/repos/mayfieldrobotics/ros-virtual-camera/badge.svg?branch=master)](https://coveralls.io/r/mayfieldrobotics/ros-virtual-camera?branch=master)
 
 ROS node for streaming an image topic to  a video capture device. Mostly
 based on this:
