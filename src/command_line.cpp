@@ -43,9 +43,17 @@ CommandLine::CommandLine() :
     _tclap.add(_queue_size);
 }
 
-void CommandLine::operator() (const std::vector<std::string>& args) {
+CommandLine::CommandLine(const std::vector<std::string>& args) : CommandLine() {
+    parse(args);
+}
+
+void CommandLine::parse(const std::vector<std::string>& args) {
     std::vector<std::string> t(args);
     _tclap.parse(t);
+}
+
+void CommandLine::operator() (const std::vector<std::string>& args) {
+    parse(args);
 }
 
 std::string CommandLine::video_device() {

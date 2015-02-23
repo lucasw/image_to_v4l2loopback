@@ -126,6 +126,8 @@ target_link_libraries(stream
   ${OpenCV_LIBRARIES}
 )
 
+set_property(TARGET stream APPEND_STRING PROPERTY COMPILE_FLAGS " -std=c++11")
+
 #############
 ## Install ##
 #############
@@ -188,4 +190,9 @@ if(CATKIN_ENABLE_TESTING)
       src/video_device.cpp
   )
   target_link_libraries(unit_test ${catkin_LIBRARIES})
+  set_property(TARGET unit_test APPEND_STRING PROPERTY COMPILE_FLAGS " -std=c++11")
+  target_link_libraries(stream
+      ${catkin_LIBRARIES}
+      ${OpenCV_LIBRARIES}
+  )
 endif()

@@ -3,12 +3,25 @@
 
 #include "tclap/CmdLine.h"
 
+/**
+ * Parses command-lines arguments.
+ */
 class CommandLine {
 
 public:
 
     CommandLine();
 
+    CommandLine(const std::vector<std::string>& args);
+
+    /**
+     * Parses command line arguments.
+     * \args Array of command line argument to parse.
+     * \throws
+     */
+    void parse(const std::vector<std::string>& args);
+
+    /// Alias for CommandLine::parse.
     void operator()(const std::vector<std::string>& args);
 
     struct Size {
@@ -21,12 +34,16 @@ public:
 
     };
 
+    /// Path to video capture device. Image data is written to this.
     std::string video_device();
 
+    /// Size of the image to write to CommandLine::video_device.
     Size video_size();
 
+    /// Convert image to this format before writing to CommandLine::video_device.
     std::string video_fourcc();
 
+    /// Size of incoming sensor_msgs/Image topic queue.
     size_t queue_size();
 
 private:

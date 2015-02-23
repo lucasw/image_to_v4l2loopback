@@ -6,10 +6,16 @@
 #include <linux/videodev2.h>
 #include <unistd.h>
 
+/**
+ * Represents a video capture device.
+ */
 class VideoDevice {
 
 public:
 
+    /**
+     * \path Path to video capture device.
+     */
     VideoDevice(const std::string& path);
 
     VideoDevice(const VideoDevice& other);
