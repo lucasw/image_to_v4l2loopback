@@ -1,5 +1,5 @@
-#ifndef VIRTUAL_CAMERA_DEVICE_H_
-#define VIRTUAL_CAMERA_DEVICE_H_
+#ifndef VIRTUAL_CAM_DEVICE_H_
+#define VIRTUAL_CAM_DEVICE_H_
 
 #include <string>
 
@@ -42,4 +42,4 @@ private:
 
 };
 
-#endif /* VIRTUAL_CAMERA_DEVICE_H_ */
+#endif /* VIRTUAL_CAM_DEVICE_H_ */

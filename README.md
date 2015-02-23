@@ -1,4 +1,4 @@
-# ros-virtual-camera [![Build Status](https://travis-ci.org/mayfieldrobotics/ros-virtual-camera.svg?branch=master)](https://travis-ci.org/mayfieldrobotics/ros-virtual-camera) [![Coverage Status](https://coveralls.io/repos/mayfieldrobotics/ros-virtual-camera/badge.svg?branch=master)](https://coveralls.io/r/mayfieldrobotics/ros-virtual-camera?branch=master)
+# ros-virtual-cam [![Build Status](https://travis-ci.org/mayfieldrobotics/ros-virtual-cam.svg?branch=master)](https://travis-ci.org/mayfieldrobotics/ros-virtual-cam) [![Coverage Status](https://coveralls.io/repos/mayfieldrobotics/ros-virtual-cam/badge.svg?branch=master)](https://coveralls.io/r/mayfieldrobotics/ros-virtual-cam?branch=master)
 
 ROS node for streaming an image topic to  a video capture device. Mostly
 based on this:
@@ -10,9 +10,9 @@ based on this:
 Setup a workspace:
 
 ```bash
-$ mkdir ~/ros/virtual-camera-ws/src -p
-$ cd ~/ros/virtual-camera-ws/src
-$ git clone git@github.com:ixirobot/ros-virtual-camera.git virtual_camera
+$ mkdir ~/ros/virtual-cam-ws/src -p
+$ cd ~/ros/virtual-cam-ws/src
+$ git clone git@github.com:ixirobot/ros-virtual-cam.git virtual_cam
 $ catkin_init_workspace
 $ cd ..
 $ catkin_make
@@ -21,9 +21,9 @@ $ catkin_make
 and a project if you want:
 
 ```bash
-$ mkdir ~/ros/virtual-camera-prj -p
-$ cd ~/ros/virtual-camera-prj
-$ cmake -G"Eclipse CDT4 - Unix Makefiles" -D CMAKE_BUILD_TYPE=Debug ~/ros/virtual-camera-ws/src/virtual_camera
+$ mkdir ~/ros/virtual-cam-prj -p
+$ cd ~/ros/virtual-cam-prj
+$ cmake -G"Eclipse CDT4 - Unix Makefiles" -D CMAKE_BUILD_TYPE=Debug ~/ros/virtual-cam-ws/src/virtual_cam
 ```
 
 ## video devices
@@ -66,7 +66,7 @@ Driver Info (not using libv4l2):
 Typically just:
 
 ```bash
-$ rosrun virtual_camera stream /dev/video1 -s 640x480 -f YV12 image:=/my_camera/image
+$ rosrun virtual_cam stream /dev/video1 -s 640x480 -f YV12 image:=/my_camera/image
 ```
 
 where:
@@ -79,7 +79,7 @@ where:
 For more:
 
 ```bash
-$ rosrun virtual_camera stream --help
+$ rosrun virtual_cam stream --help
 ```
 
 ## tests
@@ -96,14 +96,14 @@ Driver Info (not using libv4l2):
         Video Output
         Read/Write
         Streaming
-$ ROS_VIRTUAL_CAMERA_STREAM_TEST_DEVICE=/dev/video1 catkin_make run_tests
+$ ROS_VIRTUAL_CAM_STREAM_TEST_DEVICE=/dev/video1 catkin_make run_tests
 ```
 
 If you want coverage:
 
 ```bash
 $ catkin_make -DCMAKE_BUILD_TYPE=Debug -DCOVERAGE=ON
-$ ROS_VIRTUAL_CAMERA_STREAM_TEST_DEVICE=/dev/video1 catkin_make run_tests
+$ ROS_VIRTUAL_CAM_STREAM_TEST_DEVICE=/dev/video1 catkin_make run_tests
 $ lcov --path . --directory . --capture --output-file coverage.info
 $ lcov --remove coverage.info 'tests/*' '/usr/*' '/opt/*' --output-file coverage.info
 $ lcov --list coverage.info

@@ -1,5 +1,5 @@
-#ifndef VIRTUAL_CAMERA_COMMAND_LINE_H_
-#define VIRTUAL_CAMERA_COMMAND_LINE_H_
+#ifndef VIRTUAL_CAM_COMMAND_LINE_H_
+#define VIRTUAL_CAM_COMMAND_LINE_H_
 
 #include "tclap/CmdLine.h"
 
@@ -79,4 +79,4 @@ namespace TCLAP {
 
 }
 
-#endif /* VIRTUAL_CAMERA_COMMAND_LINE_H_ */
+#endif /* VIRTUAL_CAM_COMMAND_LINE_H_ */

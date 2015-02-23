@@ -1,5 +1,5 @@
-#ifndef VIRTUAL_CAMERA_IMAGE_CONVERTER_H_
-#define VIRTUAL_CAMERA_IMAGE_CONVERTER_H_
+#ifndef VIRTUAL_CAM_IMAGE_CONVERTER_H_
+#define VIRTUAL_CAM_IMAGE_CONVERTER_H_
 
 #include <linux/videodev2.h>
 #include <opencv/cv.hpp>
@@ -86,4 +86,4 @@ private:
 
 };
 
-#endif /* VIRTUAL_CAMERA_IMAGE_CONVERTER_H_ */
+#endif /* VIRTUAL_CAM_IMAGE_CONVERTER_H_ */

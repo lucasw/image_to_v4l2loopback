@@ -1,9 +1,9 @@
 <launch>
-    <param name="bag_file" value="/tmp/virtual_camera/sim-cam_2015-02-19-11-42-28.bag" type="str"/>
+    <param name="bag_file" value="/tmp/virtual_cam/sim-cam_2015-02-19-11-42-28.bag" type="str"/>
     <param name="topic" value="upward_looking_camera/image_raw" type="str"/>
-    <param name="device" value="$(env ROS_VIRTUAL_CAMERA_STREAM_TEST_DEVICE)" type="str"/>
-    <node name="stream" pkg="virtual_camera" type="stream" args="$(env ROS_VIRTUAL_CAMERA_STREAM_TEST_DEVICE)">
+    <param name="device" value="$(env ROS_VIRTUAL_CAM_STREAM_TEST_DEVICE)" type="str"/>
+    <node name="stream" pkg="virtual_cam" type="stream" args="$(env ROS_VIRTUAL_CAM_STREAM_TEST_DEVICE)">
         <remap from="image" to="upward_looking_camera/image_raw"/>
     </node>
-    <test test-name="stream_test" pkg="virtual_camera" type="stream_test.py" />
+    <test test-name="stream_test" pkg="virtual_cam" type="stream_test.py" />
 </launch>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>virtual_camera</name>
+  <name>virtual_cam</name>
   <version>0.1.0</version>
   <description>virtual camera</description>
 
@@ -19,7 +19,7 @@
   <!-- Url tags are optional, but mutiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <url type="website">https://github.com/mayfieldrobotics/ros-virtual-camera</url>
+  <url type="website">https://github.com/mayfieldrobotics/ros-virtual-cam</url>
 
 
   <!-- Author tags are optional, mutiple are allowed, one per tag -->
