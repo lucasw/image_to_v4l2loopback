@@ -1,4 +1,3 @@
-#include "command_line.h"
 #include "image_converter.h"
 #include "video_device.h"
 
@@ -38,42 +37,6 @@ TEST(TestSuite, testImageConverterFormat) {
 TEST(TestSuite, testImageConverterUnsupported) {
     ASSERT_THROW(ImageConverter(640, 480, "YUVP"), std::invalid_argument);
 }
-
-// CommandLine
-
-TEST(TestSuite, testCommandLineParseDefaults) {
-    const char* args[] = {
-        "stream",
-        "/dev/video1"
-    };
-
-    CommandLine cli(std::vector<std::string>(args, args + sizeof args/sizeof args[0]));
-
-    ASSERT_EQ(cli.video_device(), "/dev/video1");
-    ASSERT_EQ(cli.video_size().width, 640);
-    ASSERT_EQ(cli.video_size().height, 480);
-    ASSERT_EQ(cli.video_fourcc(), "YV12");
-    ASSERT_EQ(cli.queue_size(), 1);
-}
-
-TEST(TestSuite, testCommandLineParse) {
-    const char* args[]   = {
-        "stream",
-        "/dev/video1",
-        "-s", "1920x1080",
-        "-f", "YUYV",
-        "-q", "100"
-    };
-
-    CommandLine cli(std::vector<std::string>(args, args + sizeof args/sizeof args[0]));
-
-    ASSERT_EQ(cli.video_device(), "/dev/video1");
-    ASSERT_EQ(cli.video_size().width, 1920);
-    ASSERT_EQ(cli.video_size().height, 1080);
-    ASSERT_EQ(cli.video_fourcc(), "YUYV");
-    ASSERT_EQ(cli.queue_size(), 100);
-}
-
 
 int main(int argc, char **argv){
     testing::InitGoogleTest(&argc, argv);

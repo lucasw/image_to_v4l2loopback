@@ -11,9 +11,6 @@ find_package(catkin REQUIRED COMPONENTS roscpp std_msgs genmsg cv_bridge image_t
 find_package(PkgConfig REQUIRED COMPONENTS system)
 find_package(OpenCV)
 
-## System dependencies also found via PkgConfig's conventions
-pkg_check_modules(tclap REQUIRED tclap)
-
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
@@ -100,7 +97,6 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 # include_directories(include)
-include_directories(${tclap_INCLUDE_DIRS})
 include_directories(${OpenCV_INCLUDE_DIRS})
 
 ## Declare a cpp library
@@ -110,7 +106,6 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 
 ## Declare a cpp executable
 add_executable(stream
-  src/command_line.cpp
   src/image_converter.cpp
   src/stream.cpp
   src/video_device.cpp
@@ -185,7 +180,6 @@ if(CATKIN_ENABLE_TESTING)
   include_directories(src)
   catkin_add_gtest(unit_test
       tests/unit_test.cpp
-      src/command_line.cpp
       src/image_converter.cpp
       src/video_device.cpp
   )

@@ -11,7 +11,6 @@
  *
  */
 
-#include "command_line.h"
 #include "image_converter.h"
 #include "video_device.h"
 
@@ -72,34 +71,43 @@ const int EXIT_FAILED_DEVICE_CAPS = 3;      ///< Querying VideoDevice capabiliti
 
 
 int main(int argc, char**argv) {
-    ros::V_string args;
-    ros::removeROSArgs(argc, argv, args);
-    CommandLine cl;
-    cl(args);
-
     ros::init(argc, argv, "stream", ros::init_options::AnonymousName);
 
+    int width_tmp = 640;
+    ros::param::get("~width", width_tmp);
+    int height_tmp = 480;
+    ros::param::get("~height", height_tmp);
+
+    uint32_t width = width_tmp;
+    uint32_t height = height_tmp;
+
+    // valid options are BGR3, RGB3, GREY, YV12, YUYV
+    std::string fourcc = "YV12";
+    ros::param::get("~fourcc", fourcc);
     ROS_INFO(
         "converting - width=%zu, height=%zu, fourcc=%s",
-        cl.video_size().width, cl.video_size().height, cl.video_fourcc().c_str()
+        width, height, fourcc.c_str()
     );
     ImageConverter cvt(
-        cl.video_size().width,
-        cl.video_size().height,
-        cl.video_fourcc()
+        width,
+        height,
+        fourcc
     );
 
-    ROS_INFO("opening '%s'", cl.video_device().c_str());
-    VideoDevice dev(cl.video_device());
+    std::string video_device = "/dev/video1";
+    ros::param::get("~device", video_device);
 
-    ROS_INFO("setting '%s' format", cl.video_device().c_str());
+    ROS_INFO("opening '%s'", video_device.c_str());
+    VideoDevice dev(video_device);
+
+    ROS_INFO("setting '%s' format", video_device.c_str());
     v4l2_format format = cvt.format();
     int rc = dev.set_format(format);
     if (rc == -1) {
         return EXIT_FAILED_DEVICE_FORMAT;
     }
 
-    ROS_INFO("turn on '%s' streaming", cl.video_device().c_str());
+    ROS_INFO("turn on '%s' streaming", video_device.c_str());
     rc = dev.stream_on();
     if (rc == -1) {
         return EXIT_FAILED_DEVICE_STREAM;
@@ -110,15 +118,17 @@ int main(int argc, char**argv) {
     if (rc == -1) {
         return EXIT_FAILED_DEVICE_CAPS;
     }
-    ROS_INFO("'%s' caps %#08x", cl.video_device().c_str(), capability.capabilities);
+    ROS_INFO("'%s' caps %#08x", video_device.c_str(), capability.capabilities);
 
+    int queue_size = 1;
+    ros::param::get("~queue_size", queue_size);
     ROS_INFO(
         "streaming images from '%s' to '%s' w/ queue-size=%zu",
         ros::names::resolve("image", true).c_str(),
-        cl.video_device().c_str(),
-        cl.queue_size()
+        video_device.c_str(),
+        queue_size
     );
-    ImageStream stream("image", cvt, dev, cl.queue_size());
+    ImageStream stream("image", cvt, dev, queue_size);
 
     ros::spin();
 
