@@ -66,7 +66,7 @@ Driver Info (not using libv4l2):
 Typically just:
 
 ```bash
-$ rosrun virtual_cam stream /dev/video1 -s 640x480 -f YV12 image:=/my_camera/image
+$ rosrun virtual_cam stream _device:=/dev/video1 _width:=640 _height:=480 _fourcc:=YV12 image:=/my_camera/image
 ```
 
 where:
