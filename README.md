@@ -10,20 +10,10 @@ based on this:
 Setup a workspace:
 
 ```bash
-$ mkdir ~/ros/virtual-cam-ws/src -p
-$ cd ~/ros/virtual-cam-ws/src
-$ git clone git@github.com:ixirobot/ros-virtual-cam.git virtual_cam
-$ catkin_init_workspace
-$ cd ..
-$ catkin_make
-```
-
-and a project if you want:
-
-```bash
-$ mkdir ~/ros/virtual-cam-prj -p
-$ cd ~/ros/virtual-cam-prj
-$ cmake -G"Eclipse CDT4 - Unix Makefiles" -D CMAKE_BUILD_TYPE=Debug ~/ros/virtual-cam-ws/src/virtual_cam
+cd ~/catkin_ws/src  # or wherever catkin_ws is
+git clone https://github.com/lucasw/ros-virtual-cam
+cd ..
+catkin build virtual_cam
 ```
 
 ## video devices
@@ -50,14 +40,6 @@ Driver Info (not using libv4l2):
         Read/Write
         Streaming
 ```
-
-### mac
-
-**sol**
-
-### windows
-
-**sol**
 
 ## usage
 
@@ -108,3 +90,5 @@ $ lcov --path . --directory . --capture --output-file coverage.info
 $ lcov --remove coverage.info 'tests/*' '/usr/*' '/opt/*' --output-file coverage.info
 $ lcov --list coverage.info
 ```
+
+TODO(lucasw) update above for catkin build
