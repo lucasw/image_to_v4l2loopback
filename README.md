@@ -34,9 +34,9 @@ sudo reboot
 ```
 
 ```bash
-$ sudo apt-get install v4l2loopback-*
-$ sudo modprobe v4l2loopback video_nr=1
-$ v4l2-ctl -D -d /dev/video1
+sudo apt-get install v4l2loopback-*
+sudo modprobe v4l2loopback video_nr=1
+v4l2-ctl -D -d /dev/video1
 Driver Info (not using libv4l2):
     Driver name   : v4l2 loopback
     Card type     : Dummy video device (0x0000)

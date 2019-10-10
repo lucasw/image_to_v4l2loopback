@@ -64,6 +64,7 @@ int VideoDevice::get_format(v4l2_format& format) {
     int rc = ioctl(_fd, VIDIOC_G_FMT, &format);
     if (rc == -1) {
         ROS_ERROR("ioctl(%d, VIDIOC_G_FMT) failed - errno=%d, %s", _fd, errno, strerror(errno));
+        // ROS_ERROR_STREAM(format);
     } else {
         _log_format("video device format", format);
     }
