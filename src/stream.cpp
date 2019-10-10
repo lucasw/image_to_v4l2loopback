@@ -11,20 +11,19 @@
  *
  */
 
-#include "image_converter.h"
-#include "video_device.h"
-
+#include <image_to_v4l2loopback/image_converter.h>
+#include <image_to_v4l2loopback/video_device.h>
 #include <image_transport/image_transport.h>
 #include <image_transport/publisher.h>
 #include <image_transport/subscriber.h>
 #include <ros/ros.h>
 #include <sensor_msgs/Image.h>
+#include <string>
 
 /**
  * Writes converted images from a sensor_msgs::Image to a VideoDevice.
  */
 class ImageStream {
-
 public:
   ImageStream(const std::string &topic, ImageConverter &cvt, VideoDevice &dev,
               size_t queue_size)
@@ -60,11 +59,11 @@ private:
 };
 
 const int EXIT_OK = 0;                   ///< All OK.
-const int EXIT_FAILED_DEVICE_FORMAT = 1; ///< Setting VideoDevice format failed.
+const int EXIT_FAILED_DEVICE_FORMAT = 1;  ///< Setting VideoDevice format failed.
 const int EXIT_FAILED_DEVICE_STREAM =
-    2; ///< Enabling VideoDevice streaming failed.
+    2;  ///< Enabling VideoDevice streaming failed.
 const int EXIT_FAILED_DEVICE_CAPS =
-    3; ///< Querying VideoDevice capabilities failed.
+    3;  ///< Querying VideoDevice capabilities failed.
 
 int main(int argc, char **argv) {
   ros::init(argc, argv, "stream", ros::init_options::AnonymousName);

@@ -1,15 +1,21 @@
-#ifndef VIRTUAL_CAM_IMAGE_CONVERTER_H_
-#define VIRTUAL_CAM_IMAGE_CONVERTER_H_
+/*
+ * Copyright (c) 2013, Zhiwei Chu
+ * Copyright (c) 2015, mayfieldrobotics.
+ */
+
+#ifndef IMAGE_TO_V4L2LOOPBACK_IMAGE_CONVERTER_H
+#define IMAGE_TO_V4L2LOOPBACK_IMAGE_CONVERTER_H
 
 #include <linux/videodev2.h>
 #include <opencv/cv.hpp>
 #include <sensor_msgs/Image.h>
+#include <string>
+#include <vector>
 
 /**
  * Resizes and formats an image
  */
 class ImageConverter {
-
 public:
   /// Determines whether a target pixel format is supported.
   static bool is_supported(uint32_t fourcc);
@@ -83,4 +89,4 @@ private:
   void (ImageConverter::*_fmt)(const cv::Mat &image, Buffer &buf);
 };
 
-#endif /* VIRTUAL_CAM_IMAGE_CONVERTER_H_ */
+#endif  // IMAGE_TO_V4L2LOOPBACK_IMAGE_CONVERTER_H

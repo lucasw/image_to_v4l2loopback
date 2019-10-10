@@ -1,10 +1,15 @@
-#include "image_converter.h"
+/**
+ * Copyright (c) 2013, Zhiwei Chu
+ * Copyright (c) 2015, mayfieldrobotics.
+ */
 
-#include <string.h>
-
+#include <algorithm>
 #include <cv_bridge/cv_bridge.h>
+#include <image_to_v4l2loopback/image_converter.h>
 #include <ros/ros.h>
 #include <sensor_msgs/image_encodings.h>
+#include <string.h>
+#include <string>
 
 #define ROUND_UP_2(n) (((n) + 1) & ~1)
 
@@ -41,7 +46,7 @@ ImageConverter::ImageConverter(uint32_t width, uint32_t height,
     std::stringstream ss;
     ss << "Unsupported fourcc=" << _fourcc << ".";
     throw std::invalid_argument(ss.str());
-  };
+  }
 }
 
 v4l2_format ImageConverter::format() const {

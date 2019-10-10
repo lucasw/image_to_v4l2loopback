@@ -1,21 +1,24 @@
-#ifndef VIRTUAL_CAM_DEVICE_H_
-#define VIRTUAL_CAM_DEVICE_H_
+/**
+ * Copyright (c) 2013, Zhiwei Chu
+ * Copyright (c) 2015, mayfieldrobotics.
+ */
 
-#include <string>
+#ifndef IMAGE_TO_V4L2LOOPBACK_VIDEO_DEVICE_H
+#define IMAGE_TO_V4L2LOOPBACK_VIDEO_DEVICE_H
 
 #include <linux/videodev2.h>
+#include <string>
 #include <unistd.h>
 
 /**
  * Represents a video capture device.
  */
 class VideoDevice {
-
 public:
   /**
    * \path Path to video capture device.
    */
-  VideoDevice(const std::string &path);
+  explicit VideoDevice(const std::string &path);
 
   VideoDevice(const VideoDevice &other);
 
@@ -39,4 +42,4 @@ private:
   int _fd;
 };
 
-#endif /* VIRTUAL_CAM_DEVICE_H_ */
+#endif  // IMAGE_TO_V4L2LOOPBACK_VIDEO_DEVICE_H

@@ -1,10 +1,14 @@
-#include "video_device.h"
-
-#include <stdexcept>
+/*
+ * Copyright (c) 2013, Zhiwei Chu
+ * Copyright (c) 2015, mayfieldrobotics.
+ */
 
 #include <fcntl.h>
+#include <image_to_v4l2loopback/video_device.h>
 #include <ros/ros.h>
+#include <stdexcept>
 #include <string.h>
+#include <string>
 #include <sys/ioctl.h>
 #include <unistd.h>
 
