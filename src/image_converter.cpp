@@ -24,8 +24,11 @@ bool ImageConverter::is_supported(const std::string &fourcc) {
 }
 
 ImageConverter::ImageConverter(uint32_t width, uint32_t height,
-                               const std::string &fourcc)
-    : _width(width), _height(height), _fourcc(_fourcc_code(fourcc)) {
+                               const std::string &fourcc) :
+  _width(width),
+   _height(height),
+   _fourcc(_fourcc_code(fourcc))
+{
   switch (_fourcc) {
   case V4L2_PIX_FMT_BGR24:
     _param_bgr24();
@@ -59,6 +62,14 @@ v4l2_format ImageConverter::format() const {
   format.fmt.pix.pixelformat = _fourcc;
   format.fmt.pix.bytesperline = _bytes_per_line;
   format.fmt.pix.sizeimage = _size;
+  ROS_INFO_STREAM("type " <<format.type
+      << ", field " << format.fmt.pix.field
+      << ", colorspace " << format.fmt.pix.colorspace
+      << ", width " << format.fmt.pix.width
+      << ", height " << format.fmt.pix.height
+      << ", pixelformat " << format.fmt.pix.pixelformat
+      << ", bytesperline " << format.fmt.pix.bytesperline
+      << ", sizeimage " << format.fmt.pix.sizeimage);
   return format;
 }
 
@@ -113,6 +124,7 @@ uint32_t ImageConverter::_fourcc_code(const std::string &fourcc) {
 }
 
 void ImageConverter::_param_bgr24() {
+  ROS_INFO_STREAM("bgr24");
   _cv_copy_encoding = sensor_msgs::image_encodings::BGR8;
   _cv_color = false;
   _bytes_per_line = 0;
@@ -134,6 +146,8 @@ void ImageConverter::_fmt_bgr24(const cv::Mat &image, Buffer &buf) {
 }
 
 void ImageConverter::_param_rgb24() {
+  ROS_INFO_STREAM("rgb24");
+  _cv_copy_encoding = sensor_msgs::image_encodings::BGR8;
   _cv_copy_encoding = sensor_msgs::image_encodings::RGB8;
   _cv_color = false;
   _bytes_per_line = 0;
@@ -155,6 +169,7 @@ void ImageConverter::_fmt_rgb24(const cv::Mat &image, Buffer &buf) {
 }
 
 void ImageConverter::_param_grey() {
+  ROS_INFO_STREAM("grey");
   _cv_copy_encoding = sensor_msgs::image_encodings::MONO8;
   _cv_color = false;
   _bytes_per_line = 0;
@@ -172,6 +187,7 @@ void ImageConverter::_fmt_grey(const cv::Mat &image, Buffer &buf) {
 }
 
 void ImageConverter::_param_yvu420() {
+  ROS_INFO_STREAM("yvu420");
   _cv_copy_encoding = sensor_msgs::image_encodings::BGR8;
   _cv_color = true;
   _cv_color_code = CV_BGR2YCrCb;
@@ -204,6 +220,7 @@ void ImageConverter::_fmt_yvu420(const cv::Mat &image, Buffer &buf) {
 }
 
 void ImageConverter::_param_yuyv() {
+  ROS_INFO_STREAM("yuyv");
   _cv_copy_encoding = sensor_msgs::image_encodings::BGR8;
   _cv_color = true;
   _cv_color_code = CV_BGR2YCrCb;

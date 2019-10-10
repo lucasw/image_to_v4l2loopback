@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="device" default="/dev/video1" />
+  <arg name="width" default="640" />
+  <arg name="height" default="480" />
+  <arg name="format" default="YV12" />
+
+  <node name="image_loopback" pkg="image_to_v4l2loopback" type="stream"
+    output="screen"
+    require="true" >
+    <param name="device" value="$(arg device)" />
+    <param name="width" value="$(arg width)" />
+    <param name="height" value="$(arg height)" />
+    <param name="format" value="$(arg format)" />
+  </node>
+</launch>

@@ -56,7 +56,7 @@ Driver Info (not using libv4l2):
 Typically just:
 
 ```bash
-$ rosrun image_to_v4l2loopback stream _device:=/dev/video1 _width:=640 _height:=480 _fourcc:=YV12 image:=/my_camera/image
+rosrun image_to_v4l2loopback stream _device:=/dev/video1 _width:=640 _height:=480 _fourcc:=YV12 image:=/my_camera/image
 ```
 
 where:
@@ -69,13 +69,13 @@ where:
 For more:
 
 ```bash
-$ rosrun image_to_v4l2loopback stream --help
+rosrun image_to_v4l2loopback stream --help
 ```
 
 ## tests
 
 ```bash
-$ v4l2-ctl -D -d /dev/video1
+v4l2-ctl -D -d /dev/video1
 Driver Info (not using libv4l2):
     Driver name   : v4l2 loopback
     Card type     : Dummy video device (0x0000)
@@ -86,17 +86,15 @@ Driver Info (not using libv4l2):
         Video Output
         Read/Write
         Streaming
-$ ROS_VIRTUAL_CAM_STREAM_TEST_DEVICE=/dev/video1 catkin_make run_tests
+ROS_VIRTUAL_CAM_STREAM_TEST_DEVICE=/dev/video1 catkin_make run_tests
 ```
 
 If you want coverage:
 
 ```bash
-$ catkin_make -DCMAKE_BUILD_TYPE=Debug -DCOVERAGE=ON
-$ ROS_VIRTUAL_CAM_STREAM_TEST_DEVICE=/dev/video1 catkin_make run_tests
-$ lcov --path . --directory . --capture --output-file coverage.info
-$ lcov --remove coverage.info 'tests/*' '/usr/*' '/opt/*' --output-file coverage.info
-$ lcov --list coverage.info
+catkin_make -DCMAKE_BUILD_TYPE=Debug -DCOVERAGE=ON
+ROS_VIRTUAL_CAM_STREAM_TEST_DEVICE=/dev/video1 catkin_make run_tests
+lcov --path . --directory . --capture --output-file coverage.info
+lcov --remove coverage.info 'tests/*' '/usr/*' '/opt/*' --output-file coverage.info
+lcov --list coverage.info
 ```
-
-TODO(lucasw) update above for catkin build
