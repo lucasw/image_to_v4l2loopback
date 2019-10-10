@@ -2,13 +2,21 @@ cmake_minimum_required(VERSION 2.8.3)
 project(image_to_v4l2loopback)
 
 find_package(catkin REQUIRED COMPONENTS
-	roscpp
-	std_msgs
-	genmsg
 	cv_bridge
+	genmsg
 	image_transport
+	roslint
 	sensor_msgs
+	std_msgs
+  roscpp
 	)
+
+set(
+  ROSLINT_CPP_OPTS
+  "--extensions=cpp,h,hpp" "--filter=-whitespace/braces,-runtime/references"
+)
+
+roslint_cpp()
 
 find_package(PkgConfig REQUIRED COMPONENTS system)
 find_package(OpenCV)

@@ -12,34 +12,31 @@
 class VideoDevice {
 
 public:
+  /**
+   * \path Path to video capture device.
+   */
+  VideoDevice(const std::string &path);
 
-    /**
-     * \path Path to video capture device.
-     */
-    VideoDevice(const std::string& path);
+  VideoDevice(const VideoDevice &other);
 
-    VideoDevice(const VideoDevice& other);
+  ~VideoDevice();
 
-    ~VideoDevice();
+  int stream_on();
 
-    int stream_on();
+  int stream_off();
 
-    int stream_off();
+  int capabilities(v4l2_capability &capability);
 
-    int capabilities(v4l2_capability& capability);
+  int get_format(v4l2_format &format);
 
-    int get_format(v4l2_format& format);
+  int set_format(const v4l2_format &format);
 
-    int set_format(const v4l2_format& format);
-
-    ssize_t write(const unsigned char* buffer, size_t size);
+  ssize_t write(const unsigned char *buffer, size_t size);
 
 private:
+  void _log_format(const char *title, const v4l2_format &format);
 
-    void _log_format(const char* title, const v4l2_format& format);
-
-    int _fd;
-
+  int _fd;
 };
 
 #endif /* VIRTUAL_CAM_DEVICE_H_ */
