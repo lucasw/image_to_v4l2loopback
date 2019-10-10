@@ -79,7 +79,7 @@ int main(int argc, char **argv) {
   // valid options are BGR3, RGB3, GREY, YV12, YUYV
   std::string fourcc = "YV12";
   ros::param::get("~fourcc", fourcc);
-  ROS_INFO("converting - width=%zu, height=%zu, fourcc=%s", width, height,
+  ROS_INFO("converting - width=%u, height=%u, fourcc=%s", width, height,
            fourcc.c_str());
   ImageConverter cvt(width, height, fourcc);
 
@@ -111,7 +111,7 @@ int main(int argc, char **argv) {
 
   int queue_size = 1;
   ros::param::get("~queue_size", queue_size);
-  ROS_INFO("streaming images from '%s' to '%s' w/ queue-size=%zu",
+  ROS_INFO("streaming images from '%s' to '%s' w/ queue-size=%u",
            ros::names::resolve("image", true).c_str(), video_device.c_str(),
            queue_size);
   ImageStream stream("image", cvt, dev, queue_size);
