@@ -1,9 +1,9 @@
-# ros-virtual-cam [![Build Status](https://travis-ci.org/mayfieldrobotics/ros-virtual-cam.svg?branch=master)](https://travis-ci.org/mayfieldrobotics/ros-virtual-cam) [![Coverage Status](https://coveralls.io/repos/mayfieldrobotics/ros-virtual-cam/badge.svg?branch=master)](https://coveralls.io/r/mayfieldrobotics/ros-virtual-cam?branch=master)
+# image_to_v4l2loopback [![Build Status](https://travis-ci.org/mayfieldrobotics/image_to_v4l2loopback.svg?branch=master)](https://travis-ci.org/mayfieldrobotics/image_to_v4l2loopback) [![Coverage Status](https://coveralls.io/repos/mayfieldrobotics/image_to_v4l2loopback/badge.svg?branch=master)](https://coveralls.io/r/mayfieldrobotics/image_to_v4l2loopback?branch=master)
 
 ROS node for streaming an image topic to  a video capture device. Mostly
 based on this:
 
-* [virtual_camera](https://github.com/czw90130/virtual_camera)
+* [image_to_v4l2loopbackera](https://github.com/czw90130/image_to_v4l2loopbackera)
 
 ## dev
 
@@ -11,9 +11,9 @@ Setup a workspace:
 
 ```bash
 cd ~/catkin_ws/src  # or wherever catkin_ws is
-git clone https://github.com/lucasw/ros-virtual-cam
+git clone https://github.com/lucasw/image_to_v4l2loopback
 cd ..
-catkin build virtual_cam
+catkin build image_to_v4l2loopback
 ```
 
 ## video devices
@@ -24,6 +24,14 @@ your system.
 ### linux
 
 Uses [v4l2-loopback](https://github.com/umlaeute/v4l2loopback):
+
+Secure boot uefi will prevent the modprobe from working, try https://askubuntu.com/questions/762254/why-do-i-get-required-key-not-available-when-install-3rd-party-kernel-modules
+
+```bash
+sudo apt install mokutil
+sudo mokutil --disable-validation
+sudo reboot
+```
 
 ```bash
 $ sudo apt-get install v4l2loopback-*
@@ -48,7 +56,7 @@ Driver Info (not using libv4l2):
 Typically just:
 
 ```bash
-$ rosrun virtual_cam stream _device:=/dev/video1 _width:=640 _height:=480 _fourcc:=YV12 image:=/my_camera/image
+$ rosrun image_to_v4l2loopback stream _device:=/dev/video1 _width:=640 _height:=480 _fourcc:=YV12 image:=/my_camera/image
 ```
 
 where:
@@ -61,7 +69,7 @@ where:
 For more:
 
 ```bash
-$ rosrun virtual_cam stream --help
+$ rosrun image_to_v4l2loopback stream --help
 ```
 
 ## tests

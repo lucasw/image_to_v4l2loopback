@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(virtual_cam)
+project(image_to_v4l2loopback)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -92,7 +92,7 @@ endif()
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES virtual_cam
+#  LIBRARIES image_to_v4l2loopback
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
 )
@@ -110,8 +110,8 @@ include_directories(
 	)
 
 ## Declare a cpp library
-# add_library(virtual_cam
-#   src/${PROJECT_NAME}/virtual_cam.cpp
+# add_library(image_to_v4l2loopback
+#   src/${PROJECT_NAME}/image_to_v4l2loopback.cpp
 # )
 
 ## Declare a cpp executable
@@ -123,7 +123,7 @@ add_executable(stream
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-# add_dependencies(device virtual_cam_generate_messages_cpp)
+# add_dependencies(device image_to_v4l2loopback_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(stream
@@ -147,7 +147,7 @@ install(PROGRAMS
 )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS virtual_cam virtual_cam_node
+# install(TARGETS image_to_v4l2loopback image_to_v4l2loopback_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

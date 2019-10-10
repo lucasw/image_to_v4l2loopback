@@ -13,7 +13,7 @@ import sensor_msgs.msg
 import v4l2capture
 
 
-PKG = 'virtual_cam'
+PKG = 'image_to_v4l2loopback'
 NAME = 'stream_test'
 
 
