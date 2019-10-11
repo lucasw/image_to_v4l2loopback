@@ -62,14 +62,6 @@ v4l2_format ImageConverter::format() const {
   format.fmt.pix.pixelformat = _fourcc;
   format.fmt.pix.bytesperline = _bytes_per_line;
   format.fmt.pix.sizeimage = _size;
-  ROS_INFO_STREAM("type " <<format.type
-      << ", field " << format.fmt.pix.field
-      << ", colorspace " << format.fmt.pix.colorspace
-      << ", width " << format.fmt.pix.width
-      << ", height " << format.fmt.pix.height
-      << ", pixelformat " << format.fmt.pix.pixelformat
-      << ", bytesperline " << format.fmt.pix.bytesperline
-      << ", sizeimage " << format.fmt.pix.sizeimage);
   return format;
 }
 

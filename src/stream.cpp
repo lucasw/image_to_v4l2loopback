@@ -72,8 +72,8 @@ public:
     int height_tmp = 480;
     ros::param::get("~height", height_tmp);
 
-    uint32_t width = width_tmp;
-    uint32_t height = height_tmp;
+    const uint32_t width = width_tmp;
+    const uint32_t height = height_tmp;
 
     // valid options are BGR3, RGB3, GREY, YV12, YUYV
     std::string format = "YV12";

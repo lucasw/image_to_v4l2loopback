@@ -7,7 +7,7 @@
 
   <node name="image_loopback" pkg="image_to_v4l2loopback" type="stream"
     output="screen"
-    require="true" >
+    required="true" >
     <param name="device" value="$(arg device)" />
     <param name="width" value="$(arg width)" />
     <param name="height" value="$(arg height)" />
