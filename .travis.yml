@@ -86,7 +86,7 @@ before_install:
     # TODO(lucasw) the v4l2loopback currently in 18.04 is broken, but good enough to
     # build against- will need to git clone the v4l2loopback source and build
     # and install it and modprobe it later.
-  - sudo apt-get install -y python-catkin-tools python-catkin-pkg python-rosdep python-wstool ros-$ROS_DISTRO-roslint ros-$ROS_DISTRO-ros-base v4l2loopback-dkms
+  - sudo apt-get install -y python-catkin-tools python-catkin-pkg python-rosdep python-wstool ros-$ROS_DISTRO-cv-bridge ros-$ROS_DISTRO-roslint ros-$ROS_DISTRO-ros-base v4l2loopback-dkms
   - source /opt/ros/$ROS_DISTRO/setup.bash
   # Prepare rosdep to install dependencies.
   - sudo rosdep init
