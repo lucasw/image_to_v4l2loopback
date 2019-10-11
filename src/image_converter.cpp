@@ -25,29 +25,29 @@ bool ImageConverter::is_supported(const std::string &fourcc) {
 
 ImageConverter::ImageConverter(uint32_t width, uint32_t height,
                                const std::string &fourcc) :
-  _width(width),
-   _height(height),
-   _fourcc(_fourcc_code(fourcc))
+  width_(width),
+  height_(height),
+  fourcc_(_fourcc_code(fourcc))
 {
-  switch (_fourcc) {
+  switch (fourcc_) {
   case V4L2_PIX_FMT_BGR24:
-    _param_bgr24();
+    param_bgr24();
     break;
   case V4L2_PIX_FMT_RGB24:
-    _param_rgb24();
+    param_rgb24();
     break;
   case V4L2_PIX_FMT_GREY:
-    _param_grey();
+    param_grey();
     break;
   case V4L2_PIX_FMT_YVU420:
-    _param_yvu420();
+    param_yvu420();
     break;
   case V4L2_PIX_FMT_YUYV:
-    _param_yuyv();
+    param_yuyv();
     break;
   default:
     std::stringstream ss;
-    ss << "Unsupported fourcc=" << _fourcc << ".";
+    ss << "Unsupported fourcc=" << fourcc_ << ".";
     throw std::invalid_argument(ss.str());
   }
 }
@@ -57,43 +57,45 @@ v4l2_format ImageConverter::format() const {
   format.type = V4L2_BUF_TYPE_VIDEO_OUTPUT;
   format.fmt.pix.field = V4L2_FIELD_NONE;
   format.fmt.pix.colorspace = V4L2_COLORSPACE_SRGB;
-  format.fmt.pix.width = _width;
-  format.fmt.pix.height = _height;
-  format.fmt.pix.pixelformat = _fourcc;
-  format.fmt.pix.bytesperline = _bytes_per_line;
-  format.fmt.pix.sizeimage = _size;
+  format.fmt.pix.width = width_;
+  format.fmt.pix.height = height_;
+  format.fmt.pix.pixelformat = fourcc_;
+  format.fmt.pix.bytesperline = bytes_per_line_;
+  format.fmt.pix.sizeimage = size_;
   return format;
 }
 
 bool ImageConverter::convert(const sensor_msgs::ImageConstPtr &msg,
                              ImageConverter::Buffer &buffer) {
+  // TODO(lucasw) it would be nice to avoid the resize if possible,
+  // crop if necessary
   // as opencv
-  cv_bridge::CvImagePtr cv_msg = cv_bridge::toCvCopy(msg, _cv_copy_encoding);
+  cv_bridge::CvImagePtr cv_msg = cv_bridge::toCvCopy(msg, cv_copy_encoding_);
   if (cv_msg == NULL) {
     ROS_INFO("failed to copy sensor image '%s' to cv image '%s'",
-             msg->encoding.c_str(), _cv_copy_encoding.c_str());
+             msg->encoding.c_str(), cv_copy_encoding_.c_str());
     return false;
   }
   cv::Mat cv_image;
   cv::swap(cv_msg->image, cv_image);
 
   // resize
-  if (msg->width != _width || msg->height != _height) {
+  if (msg->width != width_ || msg->height != height_) {
     cv::Mat cv_resize_image;
-    cv::resize(cv_image, cv_resize_image, cv::Size(_width, _height));
+    cv::resize(cv_image, cv_resize_image, cv::Size(width_, height_));
     cv::swap(cv_image, cv_resize_image);
   }
 
   // convert color space
-  if (_cv_color) {
+  if (cv_color_) {
     cv::Mat cv_cvt_image;
-    cv::cvtColor(cv_image, cv_cvt_image, _cv_color_code, _cv_color_channels);
+    cv::cvtColor(cv_image, cv_cvt_image, cv_color_code_, cv_color_channels_);
     cv::swap(cv_image, cv_cvt_image);
   }
 
   // format
-  buffer.resize(_size);
-  ((*this).*_fmt)(cv_image, buffer);
+  buffer.resize(size_);
+  ((*this).*fmt_)(cv_image, buffer);
 
   return true;
 }
@@ -115,16 +117,16 @@ uint32_t ImageConverter::_fourcc_code(const std::string &fourcc) {
   return v4l2_fourcc(p[0], p[1], p[2], p[3]);
 }
 
-void ImageConverter::_param_bgr24() {
+void ImageConverter::param_bgr24() {
   ROS_INFO_STREAM("bgr24");
-  _cv_copy_encoding = sensor_msgs::image_encodings::BGR8;
-  _cv_color = false;
-  _bytes_per_line = 0;
-  _size = _width * _height * 3;
-  _fmt = &ImageConverter::_fmt_bgr24;
+  cv_copy_encoding_ = sensor_msgs::image_encodings::BGR8;
+  cv_color_ = false;
+  bytes_per_line_ = 0;
+  size_ = width_ * height_ * 3;
+  fmt_ = &ImageConverter::fmt_bgr24;
 }
 
-void ImageConverter::_fmt_bgr24(const cv::Mat &image, Buffer &buf) {
+void ImageConverter::fmt_bgr24(const cv::Mat &image, Buffer &buf) {
   Buffer::value_type *b = &buf[0];
   cv::Vec3b p;
   for (int row = 0; row != image.rows; row += 1) {
@@ -137,17 +139,17 @@ void ImageConverter::_fmt_bgr24(const cv::Mat &image, Buffer &buf) {
   }
 }
 
-void ImageConverter::_param_rgb24() {
+void ImageConverter::param_rgb24() {
   ROS_INFO_STREAM("rgb24");
-  _cv_copy_encoding = sensor_msgs::image_encodings::BGR8;
-  _cv_copy_encoding = sensor_msgs::image_encodings::RGB8;
-  _cv_color = false;
-  _bytes_per_line = 0;
-  _size = _width * _height * 3;
-  _fmt = &ImageConverter::_fmt_rgb24;
+  cv_copy_encoding_ = sensor_msgs::image_encodings::BGR8;
+  cv_copy_encoding_ = sensor_msgs::image_encodings::RGB8;
+  cv_color_ = false;
+  bytes_per_line_ = 0;
+  size_ = width_ * height_ * 3;
+  fmt_ = &ImageConverter::fmt_rgb24;
 }
 
-void ImageConverter::_fmt_rgb24(const cv::Mat &image, Buffer &buf) {
+void ImageConverter::fmt_rgb24(const cv::Mat &image, Buffer &buf) {
   Buffer::value_type *b = &buf[0];
   cv::Vec3b p;
   for (int row = 0; row != image.rows; row += 1) {
@@ -160,16 +162,16 @@ void ImageConverter::_fmt_rgb24(const cv::Mat &image, Buffer &buf) {
   }
 }
 
-void ImageConverter::_param_grey() {
+void ImageConverter::param_grey() {
   ROS_INFO_STREAM("grey");
-  _cv_copy_encoding = sensor_msgs::image_encodings::MONO8;
-  _cv_color = false;
-  _bytes_per_line = 0;
-  _size = _width * _height;
-  _fmt = &ImageConverter::_fmt_grey;
+  cv_copy_encoding_ = sensor_msgs::image_encodings::MONO8;
+  cv_color_ = false;
+  bytes_per_line_ = 0;
+  size_ = width_ * height_;
+  fmt_ = &ImageConverter::fmt_grey;
 }
 
-void ImageConverter::_fmt_grey(const cv::Mat &image, Buffer &buf) {
+void ImageConverter::fmt_grey(const cv::Mat &image, Buffer &buf) {
   Buffer::value_type *b = &buf[0];
   for (int row = 0; row != image.rows; row += 1) {
     for (int col = 0; col != image.cols; col += 1) {
@@ -178,24 +180,24 @@ void ImageConverter::_fmt_grey(const cv::Mat &image, Buffer &buf) {
   }
 }
 
-void ImageConverter::_param_yvu420() {
+void ImageConverter::param_yvu420() {
   ROS_INFO_STREAM("yvu420");
-  _cv_copy_encoding = sensor_msgs::image_encodings::BGR8;
-  _cv_color = true;
-  _cv_color_code = CV_BGR2YCrCb;
-  _cv_color_channels = 0;
-  _bytes_per_line = 0;
-  _size = (_width * _height) +
-          2 * (ROUND_UP_2(_width) / 2 * ROUND_UP_2(_height) / 2);
-  _fmt = &ImageConverter::_fmt_yvu420;
+  cv_copy_encoding_ = sensor_msgs::image_encodings::BGR8;
+  cv_color_ = true;
+  cv_color_code_ = CV_BGR2YCrCb;
+  cv_color_channels_ = 0;
+  bytes_per_line_ = 0;
+  size_ = (width_ * height_) +
+          2 * (ROUND_UP_2(width_) / 2 * ROUND_UP_2(height_) / 2);
+  fmt_ = &ImageConverter::fmt_yvu420;
 }
 
-void ImageConverter::_fmt_yvu420(const cv::Mat &image, Buffer &buf) {
+void ImageConverter::fmt_yvu420(const cv::Mat &image, Buffer &buf) {
   Buffer::value_type *b = &buf[0];
   Buffer::value_type *y = b;
-  Buffer::value_type *cr = y + (_width * _height);
+  Buffer::value_type *cr = y + (width_ * height_);
   Buffer::value_type *cb =
-      cr + (ROUND_UP_2(_width) / 2 * ROUND_UP_2(_height) / 2);
+      cr + (ROUND_UP_2(width_) / 2 * ROUND_UP_2(height_) / 2);
   cv::Vec3b p;
   for (int row = 0; row != image.rows; row += 1) {
     for (int col = 0; col != image.cols; col += 1) {
@@ -211,18 +213,18 @@ void ImageConverter::_fmt_yvu420(const cv::Mat &image, Buffer &buf) {
   }
 }
 
-void ImageConverter::_param_yuyv() {
+void ImageConverter::param_yuyv() {
   ROS_INFO_STREAM("yuyv");
-  _cv_copy_encoding = sensor_msgs::image_encodings::BGR8;
-  _cv_color = true;
-  _cv_color_code = CV_BGR2YCrCb;
-  _cv_color_channels = 0;
-  _bytes_per_line = 0;
-  _size = (_width * _height) * 2;
-  _fmt = &ImageConverter::_fmt_yuyv;
+  cv_copy_encoding_ = sensor_msgs::image_encodings::BGR8;
+  cv_color_ = true;
+  cv_color_code_ = CV_BGR2YCrCb;
+  cv_color_channels_ = 0;
+  bytes_per_line_ = 0;
+  size_ = (width_ * height_) * 2;
+  fmt_ = &ImageConverter::fmt_yuyv;
 }
 
-void ImageConverter::_fmt_yuyv(const cv::Mat &image, Buffer &buf) {
+void ImageConverter::fmt_yuyv(const cv::Mat &image, Buffer &buf) {
   Buffer::value_type *b = &buf[0];
   cv::Vec3b p;
   for (int row = 0; row != image.rows; row += 1) {
