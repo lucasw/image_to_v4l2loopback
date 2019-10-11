@@ -99,6 +99,7 @@ public:
 
     v4l2_format fmt;
     memset(&fmt, 0, sizeof(fmt));
+    fmt.type = V4L2_BUF_TYPE_VIDEO_OUTPUT;
     rc = dev.get_format(fmt);
     if (rc == -1) {
       throw std::runtime_error("failed to get device format");
