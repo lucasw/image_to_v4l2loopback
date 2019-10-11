@@ -10,9 +10,12 @@
 #include <string>
 #include <unistd.h>
 
+// TODO(lucasw) namespace image_to_v4l2loopback
 /**
  * Represents a video capture device.
  */
+void log_format(const char *title, const v4l2_format &format);
+
 class VideoDevice {
 public:
   /**
@@ -32,10 +35,7 @@ public:
 
   ssize_t write(const unsigned char *buffer, size_t size);
 
-  void log_format(const char *title, const v4l2_format &format);
-
 private:
-
   int fd_;
 };
 

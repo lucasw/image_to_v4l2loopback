@@ -101,7 +101,7 @@ ssize_t VideoDevice::write(const unsigned char *buffer, size_t size) {
   return written;
 }
 
-void VideoDevice::log_format(const char *title, const v4l2_format &format) {
+void log_format(const char *title, const v4l2_format &format) {
   ROS_INFO("%s:\n"
            "  type                 = %d\n"
            "  fmt.pix.width        = %d\n"

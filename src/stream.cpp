@@ -88,9 +88,26 @@ public:
     ROS_INFO("opening '%s'", video_device.c_str());
     VideoDevice dev(video_device);
 
+    int rc;
+
+    v4l2_capability capability;
+    rc = dev.capabilities(capability);
+    if (rc == -1) {
+      throw std::runtime_error("failed device caps");
+    }
+    ROS_INFO("'%s' caps %#08x", video_device.c_str(), capability.capabilities);
+
+    v4l2_format fmt;
+    memset(&fmt, 0, sizeof(fmt));
+    rc = dev.get_format(fmt);
+    if (rc == -1) {
+      throw std::runtime_error("failed to get device format");
+    }
+    log_format("current format: ", fmt);
+
     ROS_INFO("setting '%s' format", video_device.c_str());
-    v4l2_format fmt = image_converter.format();
-    int rc = dev.set_format(fmt);
+    fmt = image_converter.format();
+    rc = dev.set_format(fmt);
     if (rc == -1) {
       throw std::runtime_error("failed device format: " + format);
     }
@@ -100,14 +117,6 @@ public:
     if (rc == -1) {
       throw std::runtime_error("failed device stream");
     }
-
-    v4l2_capability capability;
-    rc = dev.capabilities(capability);
-    if (rc == -1) {
-      throw std::runtime_error("failed device caps");
-    }
-    ROS_INFO("'%s' caps %#08x", video_device.c_str(), capability.capabilities);
-
     int queue_size = 1;
     ros::param::get("~queue_size", queue_size);
     ROS_INFO("streaming images from '%s' to '%s' w/ queue-size=%u",
