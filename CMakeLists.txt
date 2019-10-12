@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(image_to_v4l2loopback)
 
+add_compile_options(-std=c++1z)
+
 find_package(catkin REQUIRED COMPONENTS
 	cv_bridge
 	genmsg
