@@ -1,9 +1,9 @@
-# image_to_v4l2loopback [![Build Status](https://travis-ci.org/mayfieldrobotics/image_to_v4l2loopback.svg?branch=master)](https://travis-ci.org/mayfieldrobotics/image_to_v4l2loopback) [![Coverage Status](https://coveralls.io/repos/mayfieldrobotics/image_to_v4l2loopback/badge.svg?branch=master)](https://coveralls.io/r/mayfieldrobotics/image_to_v4l2loopback?branch=master)
+# image_to_v4l2loopback [![Build Status](https://travis-ci.org/lucasw/image_to_v4l2loopback.svg?branch=master)](https://travis-ci.org/lucasw/image_to_v4l2loopback) [![Coverage Status](https://coveralls.io/repos/lucasw/image_to_v4l2loopback/badge.svg?branch=master)](https://coveralls.io/r/lucasw/image_to_v4l2loopback?branch=master)
 
 ROS node for streaming an image topic to  a video capture device. Mostly
 based on this:
 
-* [image_to_v4l2loopbackera](https://github.com/czw90130/image_to_v4l2loopbackera)
+* [virtual_camera](https://github.com/czw90130/virtual_camera)
 
 ## dev
 
