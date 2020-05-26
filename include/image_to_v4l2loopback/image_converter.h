@@ -7,7 +7,7 @@
 #define IMAGE_TO_V4L2LOOPBACK_IMAGE_CONVERTER_H
 
 #include <linux/videodev2.h>
-#include <opencv/cv.hpp>
+#include <opencv2/opencv.hpp>
 #include <sensor_msgs/Image.h>
 #include <string>
 #include <vector>
