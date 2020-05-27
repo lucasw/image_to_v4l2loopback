@@ -10,6 +10,7 @@
 #include <sensor_msgs/image_encodings.h>
 #include <string.h>
 #include <string>
+#include <utility>  // TODO(lucasw) roslint want this for cv::swap
 
 #define ROUND_UP_2(n) (((n) + 1) & ~1)
 
