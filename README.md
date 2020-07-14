@@ -34,7 +34,22 @@ sudo reboot
 ```
 
 ```bash
-sudo apt-get install v4l2loopback-*
+# don't bother this version is too old
+# sudo apt-get install v4l2loopback-*
+```
+
+But the ubuntu v4l2loopback is old if it doesn't work, try
+
+```bash
+git clone git@github.com:umlaeute/v4l2loopback
+cd v4l2loopback
+make
+sudo insmod v4l2loopback.ko exclusive_caps=1 video_nr=1 card_label="Fake"
+```
+See https://github.com/umlaeute/v4l2loopback for more instructions
+
+
+```
 sudo modprobe v4l2loopback video_nr=1
 v4l2-ctl -D -d /dev/video1
 Driver Info (not using libv4l2):
@@ -59,6 +74,8 @@ Typically just:
 rosrun image_to_v4l2loopback stream _device:=/dev/video1 _width:=640 _height:=480 _fourcc:=YV12 image:=/my_camera/image
 ```
 
+That resolution will then be locked in, need to rmmod and restart the module then set the resolution again.
+
 where:
 
 * `/dev/video1` target device
@@ -71,6 +88,12 @@ For more:
 ```bash
 rosrun image_to_v4l2loopback stream --help
 ```
+
+cheese works, but guvcview does not.
+
+Google hangouts says no camera found.
+
+zoom-client works.
 
 ## tests
 
