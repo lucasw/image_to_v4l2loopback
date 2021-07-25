@@ -33,6 +33,9 @@ sudo mokutil --disable-validation
 sudo reboot
 ```
 
+Enter the same password on reboot, select Change Secure Boot state, Yes to disable secure boot.
+(Or extract secure boot keys?  https://askubuntu.com/questions/760671/could-not-load-vboxdrv-after-upgrade-to-ubuntu-16-04-and-i-want-to-keep-secur/768310#768310)
+
 ```bash
 # don't bother this version is too old
 # sudo apt-get install v4l2loopback-*
